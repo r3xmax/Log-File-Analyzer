@@ -13,7 +13,7 @@ int parser(char* line, LogType* log_type, FILE* log_file) {
     fgets(line, 256, log_file);
 
     // Parsing the line ignoring the first number and retrieving the second word.
-    sscanf(line, "%*d %s", log_type_word);
+    sscanf(line, "%*d %7s", log_type_word);
 
     // Figure out the log type.
     if(strcmp(log_type_word, "INFO") == 0) {
@@ -53,7 +53,7 @@ int clasifier(char* line, LogType* log_type, FILE* info_file, FILE* warning_file
     return 1;
 }
 
-void getFileSize(int* file_size, char* line, FILE* log_file) {
+void getFileSize(int* file_size, FILE* log_file) {
     int character = 0;
 
     while((character = fgetc(log_file)) != EOF) {
@@ -102,7 +102,7 @@ int main() {
     }
 
     // Get logs.txt size
-    getFileSize(&file_size, line, log_file);
+    getFileSize(&file_size, log_file);
 
     // For each log line, clasify and put it into respective file.
     for(int i = 0; i < file_size; i++) {
@@ -114,4 +114,5 @@ int main() {
     closeFile(log_file, info_file, warning_file, error_file);
 
     return 0;
+
 }
